@@ -26,6 +26,7 @@ class WSGIServer(BaseApplication):
             logger_class='odooku.logger.GunicornLogger',
             newrelic_agent=None,
             memory_threshold=None,
+            proxy_mode=False,
             **options):
 
         global _memory_threshold

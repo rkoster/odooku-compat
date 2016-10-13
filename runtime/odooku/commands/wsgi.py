@@ -53,8 +53,14 @@ __all__ = [
     Should ideally be set to ~90 percent of available memory.
     """
 )
+@click.option(
+    '--proxy-mode',
+    is_flag=True,
+    envvar=prefix_envvar('PROXY_MODE'),
+    help="Should only be enabled when Odoo is behind a reverse proxy"
+)
 @click.pass_context
-def wsgi(ctx, port, workers, threads, timeout, cdn, memory_threshold):
+def wsgi(ctx, port, workers, threads, timeout, cdn, memory_threshold, proxy_mode):
     debug, dev, config, params = (
         ctx.obj['debug'],
         ctx.obj['dev'],
@@ -82,6 +88,7 @@ def wsgi(ctx, port, workers, threads, timeout, cdn, memory_threshold):
     extra_options = {
         'newrelic_agent': newrelic_agent,
         'memory_threshold': memory_threshold,
+        'proxy_mode': proxy_mode,
         'reload': dev,
     }
 
